@@ -1,1 +1,1 @@
-# k-koo-ecormerce its laptop based ecormerce website
+# k-koo e-shop its laptop based ecormerce website
