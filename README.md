@@ -1,1 +1,2 @@
-# k-koo e-shop its laptop based ecormerce website
+# k-koo is e-shop 
+visit it  https://kkoo.netlify.app
