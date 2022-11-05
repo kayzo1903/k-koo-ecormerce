@@ -300,6 +300,9 @@ const modalProduct = document.querySelector(".modal-product")
 const closeModal = document.getElementById("close-modal") 
 const moreDetail = document.querySelector('.product-details') //PRODUCT Modal document
 const closeStoreModal = document.getElementById('close-Store-Modal')
+const cart= document.getElementById('open-cart')
+const cartModal = document.querySelector('.cart')
+const closeCart = document.querySelector('.close-cart')
 
 //DOM loader 
 window.addEventListener('DOMContentLoaded', ()=>{
@@ -336,7 +339,7 @@ function categoryDisplayer(contentsLoader, category) {
                    <i class="fa fa-star-half"></i>
                 </div>
                <div class="buy-icon">
-                   <i class="fa fa-cart-plus"></i>
+                   <i class="fa fa-cart-plus" data-id=${items.id}></i>
                </div>
             </div>
             <button class="addToCart buy" data-id=${items.id}>
@@ -449,10 +452,10 @@ function openStore() {
                <i class="fa fa-star-half"></i>
             </div>
            <div class="buy-icon">
-               <i class="fa fa-cart-plus"></i>
+               <i class="fa fa-cart-plus"  data-id=${items.id}></i>
            </div>
         </div>
-        <button class="addToCart buy">
+        <button class="addToCart buy" data-id=${items.id}>
           Shop Now
         </button>
         <button class="addToCart details" data-id=${items.id}> 
@@ -499,7 +502,7 @@ function  getTheLaptop(unIqueId) {
             <div class="more-details">
                <p>${item.description}</p>
                <p>${item.price}</p>
-               <button class="addToCart buy">
+               <button class="addToCart cartDetails" data-id=${item.id}>
                   add to cart
                </button>
                <button class="addToCart buy">
@@ -515,12 +518,13 @@ function  getTheLaptop(unIqueId) {
 }
 
 function openProductModal(e) {
-
    let getid = e.target.dataset.id 
-   if (getid) {
+   if (e.target.classList.contains('details')) {
       modalProduct.classList.add('open')
       getTheLaptop(getid)
-      // console.log(getid);
+   }
+   else if (e.target.classList.contains('fa-cart-plus')){
+     addToMyCart(getid)
    }
 }
 
@@ -590,4 +594,173 @@ closeLoginForm.addEventListener('click', userAccoundOpen)
 function userAccoundOpen() {
    loginform.classList.toggle('openLogIN')
 
+}
+
+//Cart
+cart.addEventListener('click', ()=>{
+    cartModal.classList.toggle('open')
+})
+closeCart.addEventListener('click', ()=>{
+   cartModal.classList.toggle('open')
+})
+
+const cartContainer = document.querySelector('.cart-items-container')
+const deleteCartList = document.querySelector('.delete-cart-list')
+
+function addToMyCart(value){
+   let filtrates = laptopStore.filter( items =>{
+      if (items.id === value) {
+          return items;
+      }  
+})
+    let laptop = filtrates.map(items=>{
+     return addThis(items)
+    })
+}
+
+
+function addThis(values) {
+   const barcode = new Date().getTime().toString()
+   totalSpent(values)
+   const element = document.createElement('div')
+   element.classList.add('cart-items')
+   const attr = document.createAttribute('data-id')
+   attr.value = barcode
+   element.setAttributeNode(attr)
+   element.innerHTML = `
+                                <div class="cart-product-image">
+                                   <img src=${values.image[0]} alt=${values.name}>
+                                </div>
+                                  <div class="cart-product-name">
+                                     <p>${values.name}</p>
+                                     <p>${values.price}</p>
+                                     <button class ='remove'> <i class="fa fa-trash-can"></i></button>
+                                  </div>
+                                  <div class="cart-product-Totalprice">
+                                    <p>${values.price}</p>
+                                  </div>`
+   cartContainer.appendChild(element)
+   deleteCartList.classList.add('visible')
+   //cart button
+   element.querySelector('.remove').addEventListener('click', remove)
+   // element.querySelector('.increment').addEventListener('click', increment)
+   // element.querySelector('.decrement').addEventListener('click', decrement)
+   addToLocalStorage(barcode, values)
+}
+
+moreDetail.addEventListener("click", moreDetailCart)
+function moreDetailCart(e) {
+   let addToCart = e.target.dataset.id
+   if (e.target.classList.contains('cartDetails')){
+      addToMyCart(addToCart)
+   }
+}
+
+//cart Activity-remove items
+const cartItems = document.querySelectorAll('.cart-items')
+function remove(e) {
+   const element = e.currentTarget.parentElement.parentElement
+   const id = element.dataset.id
+   cartContainer.removeChild(element)
+   let priceRemoved = element.children[1].children[1].innerHTML
+   priceRemoved = Number((priceRemoved.replace(/\D/g, '')))
+   priceDecrement(priceRemoved)
+   if (cartContainer.children.length === 0) {
+      deleteCartList.classList.remove('visible')
+   }
+   removeFromLocalStorage(id)
+}
+ //delete all 
+ const ClearAll = document.getElementById('ClearAll').addEventListener('click', ()=>{
+   const itemsToClear = document.getElementsByClassName('cart-items')    
+   if ( itemsToClear.length > 0) {
+      Array.from(itemsToClear).forEach(element => {
+         cartContainer.removeChild(element)
+         deleteCartList.classList.remove('visible')
+         totalSpent()
+         localStorage.clear('list')
+       })
+         }
+     })
+
+//sum of total used
+let totalCost = []
+const totalCash = document.getElementById('totalCash')
+function totalSpent(values) {
+   if(values){
+   totalCost.push(Number((values.price.replace(/\D/g, '')))) 
+   sumAll = totalCost.reduce((a,b)=> { return a + b }, 0)
+   totalCash.textContent = sumAll +' Tsh'}
+   else {
+      totalCost = []
+      totalCash.textContent = '0000' +' Tsh'}
+}
+
+//price reduction
+function priceDecrement(price){
+   totalCost = totalCost.filter(items =>{
+      if (items != price) {
+         return items
+      }
+   })
+   sumAll = totalCost.reduce((a,b)=> { return a + b }, 0)
+   totalCash.textContent = sumAll + ' Tsh'
+}
+
+//local-storage
+function getLocalStorage() {
+   return  localStorage.getItem('list')?JSON.parse(localStorage.getItem('list')):[]
+}
+//add to local storage setup
+function addToLocalStorage(id, values) {
+   const grocery = {id, values}
+   let items = getLocalStorage()
+   items.push(grocery)
+   localStorage.setItem('list', JSON.stringify(items))
+}
+
+//remove local storage
+function removeFromLocalStorage(id) {
+   let items = getLocalStorage()
+   items = items.filter(item=>{
+      if (item.id !== id) {
+         return item
+      }
+   })
+   localStorage.setItem('list', JSON.stringify(items))
+ }
+
+
+//window loader
+
+window.addEventListener('DOMContentLoaded', ()=>{
+   let items = getLocalStorage()
+     items.map(item=>{
+      itemLoader(item.id ,item.values)
+})
+})
+
+function itemLoader(id,values) {
+      totalSpent(values)
+      const element = document.createElement('div')
+      element.classList.add('cart-items')
+      const attr = document.createAttribute('data-id')
+      attr.value = id
+      element.setAttributeNode(attr)
+      element.innerHTML = `
+                                   <div class="cart-product-image">
+                                      <img src=${values.image[0]} alt=${values.name}>
+                                   </div>
+                                     <div class="cart-product-name">
+                                        <p>${values.name}</p>
+                                        <p>${values.price}</p>
+                                        <button class ='remove'> <i class="fa fa-trash-can"></i></button>
+                                     </div>
+                                     <div class="cart-product-Totalprice">
+                                       <p>${values.price}</p>
+                                     </div>`
+      cartContainer.appendChild(element)
+      deleteCartList.classList.add('visible')
+      //cart button
+      element.querySelector('.remove').addEventListener('click', remove)
 }
