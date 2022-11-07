@@ -28,10 +28,12 @@
 html{
     scroll-behavior: smooth;
     overflow-x: hidden;
+    scroll-padding-top: 2.8rem;
 }
 body{
     background-color: var(--second-color);
 }
+
 .main-container {
     width: 100%;
 }
@@ -71,6 +73,7 @@ section {
     background-color: var(--skin-color);
     color: #fff;
     box-shadow: var(--box-shadow);
+    cursor: pointer;
 }
 .btn:hover{
     color: var(--text-color);
@@ -178,6 +181,20 @@ section {
     color: #fff;
     padding: .3rem .5rem;
     border-radius: .3rem;
+}
+#open-cart{
+    position: relative;
+}
+.item-number {
+    position: absolute;
+    top: -.6rem;
+    right: -.5rem;
+    z-index: 10;
+    background-color: var(--skin-color);
+    border-radius: 50%;
+    font-size: .9rem;
+    width: 1.1rem;
+    height: 1.1rem;
 }
 /* hero section */
    .hero-section {
@@ -426,6 +443,125 @@ section {
     color: var(--skin-color);
 }
 /*==============userAccount========== */
+/* =============cart============== */
+
+.cart{
+    width: 28rem;
+    background-color: var(--second-color);
+    max-height: 100vh;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    z-index: 1000;
+    overflow-y: auto;
+}
+.cart.open{
+    right: 0;
+}
+.cartContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.cart-head {
+    display: flex;
+    justify-content: flex-end;
+    align-items:  flex-end;
+    border-bottom: .1rem solid var(--text-color);
+    height: 5rem;
+    width: 100%;
+}
+.cart-head p{
+    font-size: 1.4rem;
+    text-transform: capitalize;
+}
+.cart-head p span{
+    font-size: 1rem;
+}
+#totalCash{
+    font-weight: 800;
+    font-size: 1.8rem;
+}
+.cartContainer .cart-items{
+    width: 100%;
+    margin: .5rem 0;
+    border-bottom: .1rem solid var(--text-color);
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .3rem 0;
+}
+.cart-product-image {
+    flex-basis: 9rem;
+    height: 8rem;
+    overflow: hidden;
+   
+}
+.cart-product-image img{
+    width: 100%;
+}
+.cart-product-name{
+    flex: 20%;
+    margin-left: .3rem;
+    height: 8rem;
+   
+}
+.cart-product-name p {
+    font-size: .8rem;
+    color: var(--text-color);
+}
+.cart-product-name button {
+    padding: .2rem .6rem;
+    margin-top: .4rem;
+    background-color: transparent;
+    cursor: pointer;
+}
+.cart-product-name button:hover{
+    background-color: var(--skin-color);
+}
+.cart-product-quantity{
+    flex: 3%;
+    margin-left: .3rem;
+    height: 8rem;
+    text-align: center;
+}
+.cart-product-quantity button{
+    padding: .2rem .6rem;
+    cursor: pointer;
+}
+.cart-product-quantity button:hover{
+    background-color: var(--skin-color);
+}
+.cart-product-Totalprice
+{
+    flex: 20%;
+    margin-left: .3rem;
+    height: 8rem;
+}
+.delete-cart-list {
+    width: 100%;
+    text-align: center;
+    display: none;
+}
+.delete-cart-list.visible{
+    display: block;
+}
+.close-cart {
+    position: absolute;
+    right: .7rem;
+    top: .7rem;
+}
+.close-cart .fa{
+    padding: .4rem .6rem;
+    cursor: pointer;
+}
+.close-cart .fa:hover{
+    background-color: var(--skin-color);
+    box-shadow: var(--box-shadow);
+}
+
+/* =============cart END============== */
 /* our-services */
 .why-us {
     min-width: 100%;
@@ -441,6 +577,9 @@ section {
     height: 15rem;
     overflow: hidden;
     flex-direction: column;
+    border-radius: .5rem;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 2rem;
 }
 .services-img {
     width: 10rem;
@@ -451,10 +590,18 @@ section {
     width: 100%;
     object-fit: cover;
 }
+.service-description {
+    width: 80%;
+    height: 30%;
+    margin: auto;
+    color: var(--text-color);
+    text-align: center;
+}
 /* our-services  END*/
 /* fetured product */
 .featured-product{
     width: 100%;
+    scroll-margin-top: 2rem;
 }
 .products {
     width: 100%;
@@ -558,6 +705,7 @@ section {
     background-position: right;
     background-repeat: no-repeat;
     background-size:contain;
+    scroll-margin-top: 2rem;
 }
 .offer-container {
     min-width: 100%;
@@ -918,6 +1066,9 @@ section {
     }
     .grid-footer {
         grid-template-columns: auto;
+     }
+     .cart{
+        width: 100%;
      }
 }   
 @media(max-width: 450px){

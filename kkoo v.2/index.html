@@ -21,15 +21,16 @@
                         <nav class="nav-menu">
                            <ul class="list-menu row">
                               <li class="links-menu"><a href="#home" class="links activate">home</a></li>
-                              <li class="links-menu"><a href="#products" class="links">store</a></li>
-                              <li class="links-menu"><a href="#blogs" class="links">blogs</a></li>
+                              <li class="links-menu"><a href="#products" class="links">category</a></li>
+                              <li class="links-menu"><a href="#offer" class="links">offer</a></li>
                               <li class="links-menu"><a href="#footer" class="links">contacts</a></li>
                            </ul>
                         </nav>
                         <div class="navigator row">
                           <i class="fa fa-bars" id="bars"></i>
                           <i class="fa fa-search" id="search-icon"></i>
-                          <i class="fa fa-cart-plus"></i>
+                          <i class="fa fa-cart-plus" id="open-cart">
+                            <div class="item-number center">0</div></i>
                           <i class="fa fa-user" id="open-login-form"></i>
                         </div>
                     </header>
@@ -79,6 +80,40 @@
                         <i class="fa fa-xmark" id="close-login-form"></i>
                      </div>
                      </section>
+                     <section class="cart">
+                        <div class="cartContainer pad-06">
+                           <div class="cart-head">
+                              <p> <span >total:</span> <span id="totalCash" >  000000 </span></p>
+                           </div>
+                            <div class="cart-items-container">
+                            <!-- <div class="cart-items">
+                                <div class="cart-product-image">
+                                   <img src="https://m.media-amazon.com/images/I/7150w5ZxZ9L._AC_SL1293_.jpg" alt="dell">
+                                </div>
+                                  <div class="cart-product-name">
+                                     <p>Dell Inspiron 3583 15</p>
+                                     <p>650,000Tsh</p>
+                                     <button> <i class="fa fa-trash-can"></i></button>
+                                  </div>
+                                  <div class="cart-product-quantity">
+                                     <button>+</button>
+                                     <p>1</p>
+                                     <button>-</button>
+                                  </div>
+                                  <div class="cart-product-Totalprice">
+                                    <p>650,000Tsh</p>
+                                  </div>
+                            </div>  -->
+                            </div>
+                             <div class="delete-cart-list">
+                                 <button class="btn" id="ClearAll">Clear all</button>
+                                 <button class="btn">pay Now</button>
+                             </div>
+                             <div class="close-cart">
+                                 <button><i class="fa fa-xmark"></i></button>
+                             </div>
+                        </div>
+                     </section>
                     <!------====HEADER END=======---->
                     <!------====HERO SECTION=======---->
                     <div class="sub-container">
@@ -88,9 +123,8 @@
                              <div class="hero-content">
                                  <h6>very <span class="cheap-pc">cheap</span></h6>
                                  <h3>we have <span class="cheap-pc">laptop</span> of your <span class="cheap-pc">dream</span></h3>
-                                 <p>Lorem ipsum dolor sit amet consectetur 
-                                  adipisicing elit.Lorem ipsum dolor sit amet consectetur 
-                                  adipisicing elit.</p>
+                                 <p>K-koo bringing laptop shop more close to your hands.
+                                  We are ensuring your product security and your money in general </p>
                                  <button type="button" class="btn">explore more <i class="fa fa-right-long "></i></button>
                              </div>
                               <div class="hero-image">
@@ -118,8 +152,8 @@
                                    </div>
                                     <div class="service-description">
                                     <h3>free delivery</h3>
-                                    <h6>Lorem ipsum, dolor sit amet <br>
-                                       consectetur adipisicing elit</h6>
+                                    <h6>less than 48hrs
+                                      you will receive your laptop</h6>
                                    </div> 
                                 </div>
                                 <div class="services center">
@@ -128,8 +162,8 @@
                                    </div>
                                     <div class="service-description">
                                     <h3>30 days return</h3>
-                                    <h6>Lorem ipsum, dolor sit amet <br>
-                                       consectetur adipisicing elit</h6>
+                                    <h6>refund in less than 
+                                        30 working day</h6>
                                    </div> 
                                 </div>
                                 <div class="services center">
@@ -138,8 +172,8 @@
                                  </div>
                                   <div class="service-description">
                                   <h3>payment</h3>
-                                  <h6>Lorem ipsum, dolor sit amet <br>
-                                     consectetur adipisicing elit</h6>
+                                  <h6>Our payment method is very <br>
+                                    easy and friend</h6>
                                  </div> 
                                 </div>   
                                 <div class="services center">
@@ -148,8 +182,8 @@
                                  </div>
                                   <div class="service-description">
                                   <h3>customer support</h3>
-                                  <h6>Lorem ipsum, dolor sit amet <br>
-                                     consectetur adipisicing elit</h6>
+                                  <h6>we 24/7 we can provide customer <br>
+                                    support</h6>
                                  </div> 
                               </div>                                
                             </div>
@@ -171,14 +205,14 @@
                                       </div>
                                   </div>
                                   <div class="new-arrival pad-06">
-                                    <a href="#home" class="laptop-category-name" data-id="featured-product">Trending</a>
+                                    <a href="#" class="laptop-category-name" data-id="featured-product">Trending</a>
                                     <div class="laptop-container grid-fit-16" id="Trending">
                                       <div class="laptop-product center">
                                       </div>
                                     </div>
                                   </div>
                                   <div class="new-arrival pad-06">
-                                    <a href="#home" class="laptop-category-name" data-id="top-rated">top rated</a>
+                                    <a href="#" class="laptop-category-name" data-id="top-rated">top rated</a>
                                     <div class="laptop-container grid-fit-16" id="top-rated">
                                       <div class="laptop-product center">
                                       </div>
@@ -189,7 +223,7 @@
                        </section>
                 <!------====FEATURES PRODUCTS END=======---->
                 <!------====OFFERS=======---->
-                       <article class="offer-banner">
+                       <article class="offer-banner" id="offer">
                             <div class="offer-container">
                                  <div class="offer">
                                      <h6>get gaming pc</h6>
@@ -274,7 +308,7 @@
                                      <p>2022 Apple MacBook Air Laptop with M2 chip: 13.6-inch Liquid 
                                       Retina Display, 8GB RAM, 512GB SSD Storage, 
                                       Backlit Keyboard, 1080p FaceTime HD Camera</p>
-                                      <button class="addToCart buy">
+                                      <button class="addToCart buy" id="moreDetailCart">
                                         add to cart
                                       </button>
                                       <button class="addToCart buy">
